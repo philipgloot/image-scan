@@ -18,8 +18,9 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: traefik:2.4.0
-          format: 'table'
-          output: trivy-results.sarif
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
 
       - name: test
         run: cat trivy-results.sarif
