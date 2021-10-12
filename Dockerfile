@@ -1,1 +1,1 @@
-FROM traefik:2.4.0
+FROM node:13.10.1
