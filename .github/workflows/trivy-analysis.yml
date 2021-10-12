@@ -7,14 +7,10 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ main ]
   schedule:
-    - cron: '20 17 * * 0'
+    - cron: '30 11 * * 4'
 
 jobs:
   build:
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
     name: Build
     runs-on: "ubuntu-18.04"
     steps:
@@ -23,15 +19,19 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t test:latest .
+          docker build -t hej:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'test:latest'
+          image-ref: 'hej:${{ github.sha }}'
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: read file
+        run: cat trivy-results.sarif
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
