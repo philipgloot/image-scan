@@ -33,12 +33,6 @@ jobs:
       - name: read file
         run: cat trivy-results.sarif
 
-      - name: SARIF Multitool
-        uses: microsoft/sarif-actions@v0.1
-        with:
-          # Command to be sent to SARIF Multitool
-          command: 'validate trivy-results.sarif'
-
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
         with:
