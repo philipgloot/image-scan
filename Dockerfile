@@ -1,1 +1,1 @@
-FROM traefik:2.4.0
+FROM prom/prometheus:v1.7.1
